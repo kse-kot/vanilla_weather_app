@@ -28,15 +28,23 @@ function displayTemperature(response) {
 	let humidity_elem = document.querySelector('#humidity')
 	let wind_elem = document.querySelector('#wind')
 	let date_elem = document.querySelector('#date')
+	let icon_elem = document.querySelector('#icon')
+
 	temperature_elem.innerHTML = Math.round(response.data.main.temp)
 	city_elem.innerHTML = response.data.name
 	description_elem.innerHTML = response.data.weather[0].description
 	humidity_elem.innerHTML = response.data.main.humidity
 	wind_elem.innerHTML = Math.round(response.data.wind.speed)
 	date_elem.innerHTML = formatDate(response.data.dt * 1000)
+	icon_elem.setAttribute(
+		'src',
+		`http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+	)
+	icon_elem.setAttribute('alt', response.data.weather[0].description)
 }
 
 let api_key = '63608bc5eef30d17258d77a3cb58927f'
-let api_url = `https://api.openweathermap.org/data/2.5/weather?q=New York&units=metric&appid=${api_key}`
+let city = 'New York'
+let api_url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${api_key}`
 
 axios.get(api_url).then(displayTemperature)
