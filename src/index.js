@@ -21,7 +21,8 @@ function formatDate(timestamp) {
 	return `${days[day]} ${hours}:${minutes}`
 }
 
-function displayForecast() {
+function displayForecast(response) {
+	console.log(response.data.daily)
 	let forecast_elem = document.querySelector('#forecast')
 
 	let forecast_html = `<div class="row">`
@@ -54,6 +55,12 @@ function displayForecast() {
 	forecast_elem.innerHTML = forecast_html
 }
 
+function getForecast(coordinates) {
+	let api_key = '63608bc5eef30d17258d77a3cb58927f'
+	let one_call_url = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${api_key}&unit=metric`
+	axios.get(one_call_url).then(displayForecast)
+}
+
 function displayTemperature(response) {
 	let temperature_elem = document.querySelector('#temperature')
 	let city_elem = document.querySelector('#city')
@@ -76,11 +83,12 @@ function displayTemperature(response) {
 		`http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
 	)
 	icon_elem.setAttribute('alt', response.data.weather[0].description)
+
+	getForecast(response.data.coord)
 }
 
 function search(city) {
 	let api_key = '63608bc5eef30d17258d77a3cb58927f'
-	// let city = 'New York'
 	let api_url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${api_key}`
 
 	axios.get(api_url).then(displayTemperature)
@@ -120,5 +128,5 @@ fahrenheit_link.addEventListener('click', displayFahrenheitTemperature)
 let celcius_link = document.querySelector('#celcius-link')
 celcius_link.addEventListener('click', displayCelciusTemperature)
 
-search('York')
+search('New York')
 displayForecast()
