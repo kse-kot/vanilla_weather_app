@@ -111,33 +111,7 @@ function handleSubmit(event) {
 	search(city_input_elem.value)
 }
 
-function displayFahrenheitTemperature(event) {
-	event.preventDefault()
-	celcius_link.classList.remove('active')
-	fahrenheit_link.classList.add('active')
-	let fahrenheitTemperature = (celciusTemperature * 9) / 5 + 32
-	let temperature_elem = document.querySelector('#temperature')
-	temperature_elem.innerHTML = Math.round(fahrenheitTemperature)
-}
-
-function displayCelciusTemperature(event) {
-	event.preventDefault()
-	fahrenheit_link.classList.remove('active')
-	celcius_link.classList.add('active')
-	let temperature_elem = document.querySelector('#temperature')
-	temperature_elem.innerHTML = Math.round(celciusTemperature)
-}
-
-let celciusTemperature = null
-
 let form = document.querySelector('#search-form')
 form.addEventListener('submit', handleSubmit)
 
-let fahrenheit_link = document.querySelector('#fahrenheit-link')
-fahrenheit_link.addEventListener('click', displayFahrenheitTemperature)
-
-let celcius_link = document.querySelector('#celcius-link')
-celcius_link.addEventListener('click', displayCelciusTemperature)
-
 search('New York')
-displayForecast()
